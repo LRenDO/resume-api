@@ -1,7 +1,7 @@
 # Author: Ren Demeis-Ortiz
 # License: GNU GPLv3
 
-runtime: nodejs16
+runtime: nodejs20
 
 env_variables:
   ATLAS_URI: "ATLAS_URI"
