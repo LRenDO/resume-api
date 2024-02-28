@@ -1,0 +1,8 @@
+# Author: Ren Demeis-Ortiz
+# License: GNU GPLv3
+
+runtime: nodejs16
+
+env_variables:
+  ATLAS_URI: "ATLAS_URI"
+  USER_ID: "USER_ID"

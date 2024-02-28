@@ -1,6 +1,7 @@
 const ObjectId = require('mongodb').ObjectId;
 
 const getSkills = async (req, res) => {
+    const sub = req.auth.payload.sub;
     const collection = req.app.locals.db.collection('skills')
 
     try{
