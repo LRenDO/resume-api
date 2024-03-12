@@ -6,6 +6,9 @@ class DBQuery {
     }
 
     // getCollection
+    //
+    // Sends request for Mongo DB collection based on query and options
+    // and stores result in res class member.
     // Parameters: 
     //      query: (Object) MongoDb query
     //      options: (Object) MongoDb query options 
