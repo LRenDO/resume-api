@@ -1,16 +1,17 @@
 const ObjectId = require('mongodb').ObjectId;
+const SecretsClient = require('../utils/GCPSecrets');
+const DBQuery = require('../utils/DBQuery');
 
 const getSkills = async (req, res) => {
-    const sub = req.auth.payload.sub;
-    const collection = req.app.locals.db.collection('skills')
+    const sub = req.auth.payload.sub; // TODO DELETE AFTER ADDING SUB TO ALL CONTROLLERS
+    
+    const userID = await new SecretsClient().getSecret(process.env.USER_ID);
 
-    try{
-        const results = await collection.find({}).toArray();
-        res.json(results).status(200);
-    }catch(e){
-        console.error(`Error retrieving skills: ${e}`);
-        res.send(`Error retrieving skills: ${e}`).status(500);
-    }
+    const query = {
+            user_id: new ObjectId(userID),
+        };
+    const dbQuery = new DBQuery("skills", req, res);
+    dbQuery.getCollection(query);
 
 }
 

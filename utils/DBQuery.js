@@ -1,5 +1,3 @@
-const ObjectId = require('mongodb').ObjectId;
-
 class DBQuery {
     constructor(collectionName, req, res){
         this.collectionName = collectionName;
@@ -9,24 +7,20 @@ class DBQuery {
 
     // getCollection
     // Parameters: 
-    //      name
-    // Returns: 
-    async getCollection(){
+    //      query: (Object) MongoDb query
+    //      options: (Object) MongoDb query options 
+    async getCollection(query, options = {}){
         const collection = this.req.app.locals.db.collection(this.collectionName);
-        console.log(`query: ${this.req.query.userID}`); // TODO DELETE
-        // Create Query
-        const query = {
-            user_id: new ObjectId(this.req.query.userID),
-            default: true
-        };
 
         try{
-            const results = await collection.find(query).toArray();
+            const results = await collection.find(query, options).toArray();
             this.res.json(results).status(200);
         }catch(e){
             console.error(`Error retrieving ${this.collectionName}: ${e}`);
             this.res.send(`Error retrieving ${this.collectionName}: ${e}`).status(500);
         }
+
+        return;
     }
 
 }

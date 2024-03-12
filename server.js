@@ -25,7 +25,7 @@ async function main(){
     app.use(cors());
     app.use(express.json());
     app.use('/api', root);
-    app.use('/api/bios', bios);
+    app.use('/api/bios', jwtCheck, bios);
     app.use('/api/experiences', jwtCheck, experiences);
     app.use('/api/skills', jwtCheck, skills);
     app.use('/api/projects', jwtCheck, projects);

@@ -1,16 +1,17 @@
 const ObjectId = require('mongodb').ObjectId;
+const SecretsClient = require('../utils/GCPSecrets');
+const DBQuery = require('../utils/DBQuery');
 
 const getEducation = async (req, res) => {
-    const collection = req.app.locals.db.collection('education')
+    const userID = await new SecretsClient().getSecret(process.env.USER_ID);
 
-    try{
-        const results = await collection.find({}).toArray();
-        res.json(results).status(200);
-    }catch(e){
-        console.error(`Error retrieving education: ${e}`);
-        res.send(`Error retrieving education: ${e}`).status(500);
-    }
-
+    const query = {
+            user_id: new ObjectId(userID),
+        };
+    const dbQuery = new DBQuery("education", req, res);
+    dbQuery.getCollection(query);
+    
+    return;
 }
 
 module.exports = {getEducation};
