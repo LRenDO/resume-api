@@ -26,6 +26,27 @@ class DBQuery {
         return;
     }
 
+    // aggregateCollections
+    //
+    // Sends request for Mongo DB to get aggregated collections based on 
+    // pipeline passed.
+    // Parameters: 
+    //      pipeline: (Array of Objects) MongoDb aggregation pipeline
+    
+    async aggregateCollections(pipeline){
+        const collection = this.req.app.locals.db.collection(this.collectionName);
+
+        try{
+            const results = await collection.aggregate(pipeline).toArray();
+            this.res.json(results).status(200);
+        }catch(e){
+            console.error(`Error retrieving aggregation ${this.collectionName}: ${e}`);
+            this.res.send(`Error retrieving aggregation ${this.collectionName}: ${e}`).status(500);
+        }
+
+        return;
+    }
+
 }
 
 module.exports = DBQuery;
